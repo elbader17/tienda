@@ -6,17 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="/script.js">
+    <link href="/style.css">
+    <!--<link rel="stylesheet" href="/tienda/pruducto.html">-->
+    
     <title>Document</title>
 </head>
 
-<body>
+<body onload="getDatos();">
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger"style="position: relative">
+        <a class="navbar-brand" href="#">ecommerce</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">producto <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">sobre nosotos <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">contactos <span class="sr-only">(current)</span></a>
+              </li>
+        </ul>
+        </div>
+        </nav>
+
     <div class="container">
-
-    <button class="btn btn-primary" id="boton"  role="button">Link</button>
-
-    <div id="catalogo">
         
+    <div id="catalogo" class="col-12">
+
+    </div>
+    
+    <div id="informacion" style="display: none;">
+      <a onclick="mostrar()"><h1><--</h1></a>
+
+  </div>
     </div>
 
 
