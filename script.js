@@ -6,6 +6,7 @@ let columna;
 
 let idProducto2;
 let columna2;
+
 function ocultar() {
   document.getElementById('catalogo').style.display = 'none';
   document.getElementById('informacion').style.display = 'block';
@@ -37,7 +38,8 @@ function getDatos() {                                                           
 }
 
 function buscarDato(comp2) {
-  let idProducto2 = parseInt(comp2.id);
+  let idProducto2 = comp2.id;
+  let a=parseInt(idProducto2)
   fetch('http://gsx2json.com/api?id=1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM&rows=false')
     .then(res => res.json())
     .then(data => {
@@ -51,15 +53,11 @@ function buscarDato(comp2) {
         }
         else
           break
-          
       }
       p=document.getElementById("info")
-      p.innerHTML = `<p id="info">${data.columns.descripcion[idProducto2]}</p> `
-      
-
-      
-
-      return enviarInfo(idProducto2,contador)
+      p.innerHTML = `<p id="info">${data.columns.descripcion[a]}</p> 
+      <input type="textfield" value="${data.columns.descripcion[a]}" id="imput" aria-describedby="emailHelp">`
+      return enviarInfo(a,contador)
     })
     
 }
@@ -71,9 +69,7 @@ function enviarInfo(fila, col) {
   console.log("lalala")
   console.log(fila)
   console.log(col)
-  google(col,fila, null)
-
-
+  google(col,fila+1, "puto el que lee")
 
 }
 
@@ -117,9 +113,7 @@ function obtenerBoton(comp) {         // OBTENGO EL BOTON PRECIONADO Y OBTENGO S
 //--------------------------------------------API GOOGLE SHEETS---------------------------------------
 
 const SHEET_ID = '1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM';
-const ACCESS_TOKEN = 'ya29.a0AfH6SMDF1elWIqZ0qD73el4uQPhfsuecbgBJyWzdcd3Wfs-jpSEesd2FdWxfotcxSv_Z5l3FVANdyPgw9WMqMP7IGXcyBYjW5cCbPcp-n3jn4QplJT1dM-VckqGLrgwLnKDZQ32ezsFUCx16tLhhF24tBSL7OmwZEVw';
-
-
+const ACCESS_TOKEN = 'ya29.a0AfH6SMC2nTlnD9fagxyoF9sHonl-bFE-JI56JRrfytNl5lW4AO5a7sgOEOZCfskatTM7AkkLLAarQnDcrMMcnQIRDHYlwEHKuJpp9CeZjHwhN6rIOH_bvkt7f7637sbEYu4b-WppXrznmVWOZdahXBdL6KTWPQne5SE';
 
 function google(col, fil, msg) {
 
@@ -136,8 +130,7 @@ function google(col, fil, msg) {
         repeatCell: {
           range: {
             startColumnIndex: col,
-            endColumnIndex: col + 1,
-            
+            endColumnIndex: col + 1,            
             startRowIndex: fil,
             endRowIndex: fil + 1,
             sheetId: 0
