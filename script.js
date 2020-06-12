@@ -3,6 +3,9 @@ let producto = document.getElementById("catalogo")
 let informacion = document.getElementById("informacion")
 let idProducto;
 let columna;
+
+let idProducto2;
+let columna2;
 function ocultar() {
   document.getElementById('catalogo').style.display = 'none';
   document.getElementById('informacion').style.display = 'block';
@@ -33,48 +36,42 @@ function getDatos() {                                                           
     })
 }
 
-function editarDato(comp2) {
-  idProducto2 = comp2.id;
+function buscarDato(comp2) {
+  let idProducto2 = parseInt(comp2.id);
   fetch('http://gsx2json.com/api?id=1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM&rows=false')
     .then(res => res.json())
     .then(data => {
       var contador = 0
       console.log(data.columns)
       for (y in data.columns) {
-        console.log(y)
+        
         if (y !== "descripcion") {
           contador++
-          console.log(contador)
+          
         }
         else
-
           break
-
-      }
-      prueba.innerHTML = `
-        <div id="prueba">
           
-           
-          <p>${data.columns.descripcion[idProducto2]}</p>
-         
-          <input type="textfield" class="form-control" id="imput" aria-describedby="emailHelp">
-          <a  class="btn btn-outline-success"  onclick="enviarInfo("imput", ${idProducto2},${columna})">aa</a>
-         
-      </div> `
+      }
+      p=document.getElementById("info")
+      p.innerHTML = `<p id="info">${data.columns.descripcion[idProducto2]}</p> `
+      
 
+      
 
+      return enviarInfo(idProducto2,contador)
     })
-
+    
 }
 
 
 
 
-function enviarInfo(id, fila, col) {
-  const valor = document.getElementById(id).value
-  console.log(valor)
+function enviarInfo(fila, col) {
+  console.log("lalala")
   console.log(fila)
   console.log(col)
+  google(col,fila, null)
 
 
 
@@ -102,9 +99,7 @@ function obtenerBoton(comp) {         // OBTENGO EL BOTON PRECIONADO Y OBTENGO S
             <div class="card-body">
               <h1 class="card-title" id="">${data.columns.titulo[idProducto]}</h1>
               <p>${data.columns.descripcion[idProducto]}</p>
-              <p>talle: ${data.columns.talle[idProducto]}</p>
-              <p>marca: ${data.columns.marca[idProducto]}</p>
-
+              
               <a  class="btn btn-outline-success" id="${idProducto}" onclick="obtenerBoton(this), ocultar();">$${data.columns.precio[idProducto]}</a>
             </div>
           </div>`
@@ -115,16 +110,19 @@ function obtenerBoton(comp) {         // OBTENGO EL BOTON PRECIONADO Y OBTENGO S
     })
 }
 
+{/* <p>talle: ${data.columns.talle[idProducto]}</p>                  esto va en la linea 102
+              <p>marca: ${data.columns.marca[idProducto]}</p> */}
 
 
 //--------------------------------------------API GOOGLE SHEETS---------------------------------------
 
 const SHEET_ID = '1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM';
-const ACCESS_TOKEN = 'ya29.a0AfH6SMATIyG4Mo1EFYlhLT2y6-F8ZKR64YV20MVMhvpOSz-IfVnBSndsYfkSBBMrHOYSRh1w_YWZOEwjXexoHzyokPnMnUyC_KnFfIwiS_Cs8j0BkHN85xjQzZYI3S2oN4MyktC2sPgzkvZP8o_82YeW8RXWAucaRMc';
+const ACCESS_TOKEN = 'ya29.a0AfH6SMDF1elWIqZ0qD73el4uQPhfsuecbgBJyWzdcd3Wfs-jpSEesd2FdWxfotcxSv_Z5l3FVANdyPgw9WMqMP7IGXcyBYjW5cCbPcp-n3jn4QplJT1dM-VckqGLrgwLnKDZQ32ezsFUCx16tLhhF24tBSL7OmwZEVw';
 
 
 
 function google(col, fil, msg) {
+
   fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`, {
     method: "POST",
     headers: {
@@ -139,6 +137,7 @@ function google(col, fil, msg) {
           range: {
             startColumnIndex: col,
             endColumnIndex: col + 1,
+            
             startRowIndex: fil,
             endRowIndex: fil + 1,
             sheetId: 0
