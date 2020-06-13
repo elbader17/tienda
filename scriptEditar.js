@@ -3,6 +3,7 @@ let producto = document.getElementById("catalogo")
 let informacion = document.getElementById("informacion")
 let idProducto;
 let columna;
+let nuevoImput;
 
 let idProducto2;
 let columna2;
@@ -28,14 +29,16 @@ function getDatos() {                                                           
             <img src="${data.columns.imagen[x]}" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title" id="">${data.columns.titulo[x]}</h5>
-              <a  class="btn btn-outline-success" id="${x}" onclick="obtenerBoton(this), ocultar();">Detalle</a>
-              <a  class="btn btn-outline-success" href="editar.html" id="0" onclick="buscarDato(this)">Editar</a>
+              
+              <a  class="btn btn-outline-success" id="${x}" onclick="obtenerBoton(this), ocultar();">$${data.columns.precio[x]}</a>
             </div>
           </div>`
 
       }
     })
 }
+
+// TRAER LOS DATOS DE LA DB
 
 function buscarDato(comp2) {
   let idProducto2 = comp2.id;
@@ -45,31 +48,68 @@ function buscarDato(comp2) {
     .then(data => {
       var contador = 0
       console.log(data.columns)
-      for (y in data.columns) {
+    //   for (y in data.columns) {
         
-        if (y !== "descripcion") {
-          contador++
+    //     if (y !== "descripcion") {
+    //       contador++
           
-        }
-        else
-          break
-      }
+    //     }
+    //     else
+    //       break
+    //   }
+      
       p=document.getElementById("info")
-      p.innerHTML = `<p id="info">${data.columns.descripcion[a]}</p> 
-      <input type="textfield" value="${data.columns.descripcion[a]}" id="imput" aria-describedby="emailHelp">` 
-      return enviarInfo(a,contador)
+      p.innerHTML = `
+      <
+      <h3>Titulo</h3>
+      <input type="textfield" value="${data.columns.titulo[a]}" id="titulo" aria-describedby="emailHelp">
+      <h3>Precio</h3>
+      <input type="textfield" value="${data.columns.precio[a]}" id="precio" aria-describedby="emailHelp">
+      <h3>Descripcion</h3>
+      <input type="textfield" id="descripcion" value="${data.columns.descripcion[a]}">
+      <a  class="btn btn-outline-success"  id="0" onclick="editarDato(this)">Guardar</a>
+      ` 
+      
+      
     })
     
 }
 
 
+// MANDAR LOS DATOS A LA DB
+
+function editarDato(comp2) {
+    let idProducto2 = comp2.id;
+    let a=parseInt(idProducto2)
+    fetch('http://gsx2json.com/api?id=1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM&rows=false')
+      .then(res => res.json())
+      .then(data => {
+        var contador = 0
+        console.log(data.columns)
+        for (y in data.columns) {
+          
+          if (y !== "descripcion") {
+            contador++
+            
+          }
+          else
+            break
+        }         
+        return enviarInfo(a,contador)
+
+      })
+      
+  }
+  
 
 
 function enviarInfo(fila, col) {
   console.log("lalala")
   console.log(fila)
   console.log(col)
-  google(col,fila+1, "puto el que lee")
+  const dato = document.getElementById("descripcion").value;
+  console.log(dato)
+  google(col,fila+1,dato)
 
 }
 
@@ -113,7 +153,7 @@ function obtenerBoton(comp) {         // OBTENGO EL BOTON PRECIONADO Y OBTENGO S
 //--------------------------------------------API GOOGLE SHEETS---------------------------------------
 
 const SHEET_ID = '1qETJ49SZls5EzOmHxhHmwGGfoXa_AntDSpLSXkLPJSM';
-const ACCESS_TOKEN = 'ya29.a0AfH6SMC2nTlnD9fagxyoF9sHonl-bFE-JI56JRrfytNl5lW4AO5a7sgOEOZCfskatTM7AkkLLAarQnDcrMMcnQIRDHYlwEHKuJpp9CeZjHwhN6rIOH_bvkt7f7637sbEYu4b-WppXrznmVWOZdahXBdL6KTWPQne5SE';
+const ACCESS_TOKEN = 'ya29.a0AfH6SMCNx4pd-dJ-ChqrThA41nudB4usr_IQvAbiCyZ-3IzOFPFK8OBpfMW19uyaOGp08fUAysxmwA_oLkUV0Lw0bKkgwdmp06bd6lvNj9KNcOwFInRwxvpVppNTsHSkwaIXK_V9XIx2EZSDie8dU1qEwo2XpuIZBks';
 
 function google(col, fil, msg) {
 
